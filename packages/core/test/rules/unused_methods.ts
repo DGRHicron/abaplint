@@ -272,4 +272,18 @@ ENDCLASS.`;
     expect(issues.length).to.equal(1);
   });
 
+  it("Pseudo commented multiline", async () => {
+    const abap = `
+CLASS lcl_test DEFINITION.
+  PRIVATE SECTION.
+  METHODS fill_address_line ABSTRACT
+    IMPORTING adrc_data     TYPE data
+    RETURNING VALUE(result) TYPE string
+    RAISING   zcx_exc.                               "#EC NEEDED
+ENDCLASS.`;
+    const issues = await runSingle(abap);
+    expect(issues.length).to.equal(0);
+  });
+  
+
 });
